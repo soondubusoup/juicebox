@@ -11,9 +11,10 @@ userRouter.use((req, res, next) => {
 
 userRouter.get('/', async (req, res) => {
     const users = await getAllUsers();
+    console.log(users)
     
     res.send({
-        users: []
+        users: [users]
     });
 });
 
