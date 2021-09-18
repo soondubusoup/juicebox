@@ -8,7 +8,8 @@ const {
   updatePost,
   getAllPosts,
   getAllTags,
-  getPostsByTagName
+  getPostsByTagName,
+  getUserByUsername
 } = require('./index');
 
 async function dropTables() {
@@ -196,6 +197,9 @@ async function testDB() {
     console.log("Error during testDB");
     throw error;
   }
+  console.log('Getting user albert by username');
+        const userByName = await getUserByUsername('albert')
+        console.log('Albert: ', userByName)
 }
 
 
