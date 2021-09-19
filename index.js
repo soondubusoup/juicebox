@@ -1,29 +1,21 @@
-require('dotenv').config();
+require("dotenv").config();
 
-
-console.log(process.env.JWT_SECRET);
-
-
-const { PORT = 3000 } = process.env 
-const express = require('express');
+const { PORT = 3000 } = process.env;
+const express = require("express");
 const server = express();
 
-
-
-const bodyParser = require('body-parser');
+const bodyParser = require("body-parser");
 server.use(bodyParser.json());
 
-const morgan = require('morgan');
-server.use(morgan('dev'));
+const morgan = require("morgan");
+server.use(morgan("dev"));
 
-const { client } = require('./db');
+const { client } = require("./db");
 client.connect();
 
 server.listen(PORT, () => {
-  console.log('The server is up on port', PORT)
+  console.log("The server is up on port", PORT);
 });
 
-const apiRouter = require('./api');
-server.use('/api', apiRouter)
-
-
+const apiRouter = require("./api");
+server.use("/api", apiRouter);

@@ -1,16 +1,17 @@
-const express = require('express');
+const express = require("express");
 const apiRouter = express.Router();
 
-const jwt = require('jsonwebtoken');
-const { getUserById } = require('../db');
+const jwt = require("jsonwebtoken");
+const { getUserById } = require("../db");
 const { JWT_SECRET } = process.env;
 
 // set `req.user` if possible
 apiRouter.use(async (req, res, next) => {
-  const prefix = 'Bearer ';
-  const auth = req.header('Authorization');
+  const prefix = "Bearer ";
+  const auth = req.header("Authorization");
 
-  if (!auth) { // nothing to see here
+  if (!auth) {
+    // nothing to see here
     next();
   } else if (auth.startsWith(prefix)) {
     const token = auth.slice(prefix.length);
@@ -27,28 +28,23 @@ apiRouter.use(async (req, res, next) => {
     }
   } else {
     next({
-      name: 'AuthorizationHeaderError',
-      message: `Authorization token must start with ${ prefix }`
+      name: "AuthorizationHeaderError",
+      message: `Authorization token must start with ${prefix}`,
     });
   }
 });
 
+const userRouter = require("./users");
+const postRouter = require("./posts");
+const tagsRouter = require("./tags");
+const requireUser = require("./utils");
 
-
-const userRouter = require('./users');
-const postRouter = require('./posts');
-const tagsRouter = require('./tags');
-const requireUser = require('./utils');
-
-apiRouter.use('/users', userRouter);
-apiRouter.use('/posts', postRouter);
-apiRouter.use('/tags', postRouter);
-
+apiRouter.use("/users", userRouter);
+apiRouter.use("/posts", postRouter);
+apiRouter.use("/tags", postRouter);
 
 apiRouter.use((error, req, res, next) => {
-    res.send(error);
-  });
-  
-
+  res.send(error);
+});
 
 module.exports = apiRouter;
