@@ -38,10 +38,12 @@ apiRouter.use(async (req, res, next) => {
 const userRouter = require('./users');
 const postRouter = require('./posts');
 const tagsRouter = require('./tags');
+const requireUser = require('./utils');
 
 apiRouter.use('/users', userRouter);
 apiRouter.use('/posts', postRouter);
 apiRouter.use('/tags', postRouter);
+
 
 apiRouter.use((error, req, res, next) => {
     res.send(error);
